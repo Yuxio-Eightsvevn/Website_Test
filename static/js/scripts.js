@@ -5,6 +5,18 @@ const section_names = ['home', 'awards', 'experience', 'publications'];
 
 window.addEventListener('DOMContentLoaded', event => {
 
+    // Redirect logic
+    fetch('redirect-config.json')
+        .then(response => response.json())
+        .then(config => {
+            if (config.enabled) {
+                setTimeout(() => {
+                    window.location.href = config.target_url;
+                }, config.delay_seconds * 1000);
+            }
+        })
+        .catch(error => console.log('Redirect config not found:', error));
+
     // Activate Bootstrap scrollspy on the main nav element
     const mainNav = document.body.querySelector('#mainNav');
     if (mainNav) {
